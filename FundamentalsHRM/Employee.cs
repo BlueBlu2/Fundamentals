@@ -43,6 +43,13 @@ namespace FundamentalsHRM
             Console.WriteLine($"{firstName} {lastName} has worked for {numberOfHoursWorked} hour(s)!");
 
         }
+        public int CalculateBonus(int bonus)
+        {
+            if (numberOfHoursWorked > 10)
+                bonus *= 2;
+            Console.WriteLine($"The employee got a bonus of {bonus}");
+            return bonus;
+        }
 
         public double ReciveWage(bool resetHours = true)
         {
