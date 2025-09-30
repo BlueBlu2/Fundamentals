@@ -14,52 +14,53 @@ using FundamentalsHRM;
 Console.WriteLine("Creating an Employee");
 Console.WriteLine("--------------------\n");
 
-Employee ahmed = new Employee("Ahmed", "Mohamed", "Ahmed@Mohamd.com",DateTime.Parse("12/2/2000"),500);
+Employee ahmed = new Employee("Ahmed", "Mohamed", "Ahmed@Mohamd.com",DateTime.Parse("12/2/2000"),350, EmployeeType.Manager);
 
-string name = "Aly";
-string anotherName = name;
-name += " Hassan";
+// string name = "Aly";
+// string anotherName = name;
+// name += " Hassan";
 
-Console.WriteLine("Name: " + name);
-Console.WriteLine("Another Name: " + anotherName);
+// Console.WriteLine("Name: " + name);
+// Console.WriteLine("Another Name: " + anotherName);
 
-string upperCaseName = name.ToUpper();
-Console.WriteLine("Name: " + name);
-Console.WriteLine("Uppercase Name: " + upperCaseName);
+// string upperCaseName = name.ToUpper();
+// Console.WriteLine("Name: " + name);
+// Console.WriteLine("Uppercase Name: " + upperCaseName);
 
-string firstName = "Zaki";
-string lastName = "Chan";
+// string firstName = "Zaki";
+// string lastName = "Chan";
 
-StringBuilder sp = new StringBuilder();
+// StringBuilder sp = new StringBuilder();
 
-sp.Append("Last name: ");
-sp.AppendLine(lastName);
-sp.Append("First name: ");
-sp.Append(firstName);
-Console.WriteLine(sp.ToString());
+// sp.Append("Last name: ");
+// sp.AppendLine(lastName);
+// sp.Append("First name: ");
+// sp.Append(firstName);
+// Console.WriteLine(sp.ToString());
 
 
-StringBuilder sp2 = new StringBuilder();
-for (int i = 0; i < 2500; i++)
-{
-    sp2.Append(i);
-    sp2.Append(" ");
-}
+// StringBuilder sp2 = new StringBuilder();
+// for (int i = 0; i < 2500; i++)
+// {
+//     sp2.Append(i);
+//     sp2.Append(" ");
+// }
 
-string list = sp2.ToString();
-Console.WriteLine(list);
+// string list = sp2.ToString();
+// Console.WriteLine(list);
 
-// ahmed.PerformWork(25);
+ahmed.PerformWork(25);
 // int minimumBonus = 100;
 // int recivedBonus = ahmed.CalculateBonus(minimumBonus);
 //Console.WriteLine($"The minimum bonus is: {minimumBonus} and {ahmed.firstName} has recived a bonus of {recivedBonus}");
+ahmed.ReciveWage();
 
-// Employee max = new("Max", "Tourest", "Jack@Luck.com", new DateTime(1999,8,25), 250);
+Employee max = new("Max", "Tourest", "Jack@Luck.com", new DateTime(1999, 8, 25), 250, EmployeeType.Research);
 // int bonusTax;
-// max.PerformWork(40);
+ max.PerformWork(40);
 // int recivedBonus = max.CalculateBonusAndBonusTax(minimumBonus,out bonusTax);
 // Console.WriteLine($"The minimum bonus is: {minimumBonus}, the bonus tax is {bonusTax}, and {ahmed.firstName} has recived a bonus of {recivedBonus}");
-
+max.ReciveWage();
 // Employee testEmployee = ahmed;
 // ahmed.DisplayEmployeeDetails();
 // testEmployee.DisplayEmployeeDetails();
@@ -90,3 +91,7 @@ Console.WriteLine(list);
 
 // var jackWage = jack.ReciveWage(true);
 // Console.WriteLine($"Jack wage paid (Message from program): {jackWage}");
+WorkTask task;
+task.description = "New Task";
+task.hours = 3;
+task.PerformWorkTask();

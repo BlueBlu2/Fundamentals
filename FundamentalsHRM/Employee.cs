@@ -15,17 +15,20 @@ namespace FundamentalsHRM
 
         public DateTime birthDay;
 
+        public EmployeeType employeeType;
+
         private const int minimalHoursWorkedUnit = 1;
-        public Employee(string fn, string ln, string em, DateTime bd, double rate)
+        public Employee(string fn, string ln, string em, DateTime bd, double rate, EmployeeType et)
         {
             firstName = fn;
             lastName = ln;
             email = em;
             birthDay = bd;
             hourlyRate = rate;
+            employeeType = et;
         }
 
-        public Employee(string fn, string ln, string em, DateTime bd) : this(fn, ln, em, bd, 100)
+        public Employee(string fn, string ln, string em, DateTime bd) : this(fn, ln, em, bd, 100, EmployeeType.StoreManager)
         {
             
         }
@@ -79,9 +82,19 @@ namespace FundamentalsHRM
             Console.WriteLine($"The employee got a bonus of {bonus} and the tax on the bonus is {bonusTax}");
             return bonus;
         }
+
+
         public double ReciveWage(bool resetHours = true)
         {
-            wage = numberOfHoursWorked * hourlyRate;
+            if (employeeType == EmployeeType.Manager)
+            {
+                Console.WriteLine($"An extra was added to the wage since {firstName} is a manager!");
+                wage = numberOfHoursWorked * hourlyRate * 1.25;
+            }
+            else
+            {
+                wage = numberOfHoursWorked * hourlyRate;
+            }
 
             Console.WriteLine($"{firstName} {lastName} has received a wage of {wage} for {numberOfHoursWorked} hour(s) of work");
 
