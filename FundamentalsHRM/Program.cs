@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using FundamentalsHRM.Accounting;
 using FundamentalsHRM.HR;
 
 
@@ -31,6 +32,7 @@ ahmed.DisplayEmployeeDetails();
 max.DisplayEmployeeDetails();
 
 FundamentalsHRM.Accounting.Customer customer = new FundamentalsHRM.Accounting.Customer();
+#region GC Test
 
 List<Employee> employees = new List<Employee>();
 for  (int i = 0; i < 10000000; i++)
@@ -44,3 +46,9 @@ employees = null;
 GC.Collect();
 
 Console.ReadLine();
+#endregion
+#region Record Test
+Account account = new Account("2020202020");
+//account.AccountNumber = "7000"; // Error since immutability 
+
+#endregion
