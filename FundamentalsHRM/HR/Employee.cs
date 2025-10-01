@@ -1,7 +1,7 @@
 // See https://aka.ms/new-console-template for more information
 using System;
 
-namespace FundamentalsHRM
+namespace FundamentalsHRM.HR
 {
     internal class Employee
     {
@@ -11,20 +11,21 @@ namespace FundamentalsHRM
 
         public int numberOfHoursWorked;
         public double wage;
-        public double hourlyRate;
+        public double? hourlyRate;
 
         public DateTime birthDay;
 
         public EmployeeType employeeType;
 
         private const int minimalHoursWorkedUnit = 1;
-        public Employee(string fn, string ln, string em, DateTime bd, double rate, EmployeeType et)
+        public static double taxRate = 0.15;
+        public Employee(string fn, string ln, string em, DateTime bd, double? rate, EmployeeType et)
         {
             firstName = fn;
             lastName = ln;
             email = em;
             birthDay = bd;
-            hourlyRate = rate;
+            hourlyRate = rate??100;
             employeeType = et;
         }
 
@@ -86,15 +87,19 @@ namespace FundamentalsHRM
 
         public double ReciveWage(bool resetHours = true)
         {
+            double wageBeforeTax = 0.0;
             if (employeeType == EmployeeType.Manager)
             {
                 Console.WriteLine($"An extra was added to the wage since {firstName} is a manager!");
-                wage = numberOfHoursWorked * hourlyRate * 1.25;
+                wageBeforeTax = numberOfHoursWorked * hourlyRate.Value * 1.25;
             }
             else
             {
-                wage = numberOfHoursWorked * hourlyRate;
+                wageBeforeTax = numberOfHoursWorked * hourlyRate.Value;
             }
+            double taxAmount = wageBeforeTax * taxRate;
+
+            wage = wageBeforeTax - taxAmount;
 
             Console.WriteLine($"{firstName} {lastName} has received a wage of {wage} for {numberOfHoursWorked} hour(s) of work");
 
@@ -106,7 +111,7 @@ namespace FundamentalsHRM
 
         public void DisplayEmployeeDetails()
         {
-            Console.WriteLine($"\nFirst Name: \t{firstName}\nLast Name: \t{lastName}\nEmail: \t{email}\nBirthday: \t{birthDay.ToShortDateString()}\n");
+            Console.WriteLine($"\nFirst Name: \t{firstName}\nLast Name: \t{lastName}\nEmail: \t{email}\nBirthday: \t{birthDay.ToShortDateString()}\nTax rate: \t{taxRate}");
         }
     }
 }

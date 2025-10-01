@@ -1,6 +1,6 @@
 using System;
 
-namespace FundamentalsHRM
+namespace FundamentalsHRM.HR
 {
     internal struct WorkTask
     {

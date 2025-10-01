@@ -1,4 +1,4 @@
-namespace FundamentalsHRM
+namespace FundamentalsHRM.HR
 {
     internal enum EmployeeType
     {
