@@ -3,7 +3,7 @@ using System;
 
 namespace FundamentalsHRM.HR
 {
-    internal class Employee : IEmployee
+    public class Employee : IEmployee
     {
         private string firstName;
         private string lastName;

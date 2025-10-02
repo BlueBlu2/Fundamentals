@@ -1,5 +1,5 @@
 // See https://aka.ms/new-console-template for more information
-internal class Address
+public class Address
 {
     private string street;
     private string houseNumber;
