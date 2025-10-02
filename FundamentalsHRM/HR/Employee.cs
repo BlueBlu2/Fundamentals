@@ -3,35 +3,72 @@ using System;
 
 namespace FundamentalsHRM.HR
 {
-    internal class Employee
+    internal class Employee : IEmployee
     {
-        public string firstName;
-        public string lastName;
-        public string email;
+        private string firstName;
+        private string lastName;
+        private string email;
 
-        public int numberOfHoursWorked;
-        public double wage;
-        public double? hourlyRate;
+        private int numberOfHoursWorked;
+        private double wage;
+        private double? hourlyRate;
 
-        public DateTime birthDay;
+        private DateTime birthDay;
 
-        public EmployeeType employeeType;
 
         private const int minimalHoursWorkedUnit = 1;
         public static double taxRate = 0.15;
-        public Employee(string fn, string ln, string em, DateTime bd, double? rate, EmployeeType et)
+
+        private Address address;
+
+        public Address Address
         {
-            firstName = fn;
-            lastName = ln;
-            email = em;
-            birthDay = bd;
-            hourlyRate = rate??100;
-            employeeType = et;
+            get { return address; }
+            set { address = value; }
         }
 
-        public Employee(string fn, string ln, string em, DateTime bd) : this(fn, ln, em, bd, 100, EmployeeType.StoreManager)
+
+        public string FirstName { get => firstName; set => firstName = value; }
+        public string LastName { get => lastName; set => lastName = value; }
+        public string Email { get => email; set => email = value; }
+        public int NumberOfHoursWorked { get => numberOfHoursWorked; protected set => numberOfHoursWorked = value; }
+        public double Wage { get => wage; private set => wage = value; }
+        public double? HourlyRate
+        {
+            get => hourlyRate; set
+            {
+                if (value > 0)
+                    hourlyRate = value;
+                else
+                    hourlyRate = 1;
+            }
+        }
+        public DateTime BirthDay { get => birthDay; set => birthDay = value; }
+
+
+        public Employee(string fn, string ln, string em, DateTime bd, double? rate)
+        {
+            FirstName = fn;
+            LastName = ln;
+            Email = em;
+            BirthDay = bd;
+            HourlyRate = rate??100;
+
+        }
+
+        public Employee(string fn, string ln, string em, DateTime bd) : this(fn, ln, em, bd, 100)
         {
             
+        }
+
+        public Employee(string fn, string ln, string em, DateTime bd, double? rate, string street, string houseNumber, string zipCode, string city)
+        {
+            FirstName = fn;
+            LastName = ln;
+            Email = em;
+            BirthDay = bd;
+            HourlyRate = rate ?? 100;
+            Address = new Address(street, houseNumber, zipCode, city);
         }
 
         public void PerformWork()
@@ -43,13 +80,13 @@ namespace FundamentalsHRM.HR
 
         public void PerformWork(int numberOfHours)
         {
-            numberOfHoursWorked += numberOfHours;
-            Console.WriteLine($"{firstName} {lastName} has worked for {numberOfHoursWorked} hour(s)!");
+            NumberOfHoursWorked += numberOfHours;
+            Console.WriteLine($"{FirstName} {LastName} has worked for {NumberOfHoursWorked} hour(s)!");
 
         }
         public int CalculateBonus(int bonus)
         {
-            if (numberOfHoursWorked > 10)
+            if (NumberOfHoursWorked > 10)
                 bonus *= 2;
             Console.WriteLine($"The employee got a bonus of {bonus}");
             return bonus;
@@ -72,7 +109,7 @@ namespace FundamentalsHRM.HR
         public int CalculateBonusAndBonusTax(int bonus, out int bonusTax)
         {
             bonusTax = 0;
-            if (numberOfHoursWorked > 10)
+            if (NumberOfHoursWorked > 10)
                 bonus *= 2;
 
             if (bonus >= 200)
@@ -87,31 +124,34 @@ namespace FundamentalsHRM.HR
 
         public double ReciveWage(bool resetHours = true)
         {
-            double wageBeforeTax = 0.0;
-            if (employeeType == EmployeeType.Manager)
-            {
-                Console.WriteLine($"An extra was added to the wage since {firstName} is a manager!");
-                wageBeforeTax = numberOfHoursWorked * hourlyRate.Value * 1.25;
-            }
-            else
-            {
-                wageBeforeTax = numberOfHoursWorked * hourlyRate.Value;
-            }
+            
+            double wageBeforeTax = NumberOfHoursWorked * HourlyRate.Value;
+            
             double taxAmount = wageBeforeTax * taxRate;
 
-            wage = wageBeforeTax - taxAmount;
+            Wage = wageBeforeTax - taxAmount;
 
-            Console.WriteLine($"{firstName} {lastName} has received a wage of {wage} for {numberOfHoursWorked} hour(s) of work");
+            Console.WriteLine($"{FirstName} {LastName} has received a wage of {Wage} for {NumberOfHoursWorked} hour(s) of work");
 
             if (resetHours)
-                numberOfHoursWorked = 0;
+                NumberOfHoursWorked = 0;
 
-            return wage;
+            return Wage;
         }
 
         public void DisplayEmployeeDetails()
         {
-            Console.WriteLine($"\nFirst Name: \t{firstName}\nLast Name: \t{lastName}\nEmail: \t{email}\nBirthday: \t{birthDay.ToShortDateString()}\nTax rate: \t{taxRate}");
+            Console.WriteLine($"\nFirst Name: \t{FirstName}\nLast Name: \t{LastName}\nEmail: \t{Email}\nBirthday: \t{BirthDay.ToShortDateString()}");
+        }
+
+        public virtual void GiveBonus()
+        {
+            Console.WriteLine($"{FirstName} {LastName} recived a bonus of 1500!");
+        }
+
+        public void GiveCompliment()
+        {
+            Console.WriteLine($"You have done a great job, {FirstName}");
         }
     }
 }
